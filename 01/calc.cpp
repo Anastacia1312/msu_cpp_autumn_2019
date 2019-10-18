@@ -72,7 +72,7 @@ int get_number (const char*& expr)
 	else if (token == Token::MINUS) 
 		return - get_number (expr); 
 	else 
-		throw -1;
+		throw std::invalid_argument("Invalid symbol in expression");
 }
 
 int func (const char*& expr, Token &oper)
@@ -80,7 +80,7 @@ int func (const char*& expr, Token &oper)
 	int result = get_number (expr); 
 	oper = get_token (expr); 
 	if (oper == Token::INV) 
-		throw -1;
+		throw std::invalid_argument("Invalid symbol in expression");
 	while (oper == Token::STAR || oper == Token::SLASH || oper == Token::NUMBER) 
 	{
 		if (oper == Token::STAR) 
@@ -91,10 +91,10 @@ int func (const char*& expr, Token &oper)
 			if (div != 0) 
 				result = result / div; 
 			else 
-				throw -2; 
+				throw std::invalid_argument("Division by zero"); 
 		} 
 		else 
-			throw -3; 
+			throw std::invalid_argument("Wrong expression"); 
 		oper = get_token (expr); 
 	}
 	return result;
@@ -116,23 +116,19 @@ int func_sign (const char*& expr)
 
 int main(int argc, char* argv[]) 
 {
-	if (argc < 2) 
-	{
-		std::cout << "No argument" << std::endl; 
-		return 0; 
-	} 
-	const char* expr = argv[1]; 
-	try {
-		std::cout << func_sign (expr) << std::endl; 
-	}
-	catch (int i) 
+    try
+    {
+        if (argc < 2) 
+        {
+            throw std::invalid_argument("No argument");  
+        } 
+        const char* expr = argv[1]; 
+        std::cout << func_sign (expr) << std::endl;
+        return 0;
+    }
+	catch (std::invalid_argument&) 
 	{ 
-		if (i == -2) 
-			std::cout << "Division by zero" << std::endl; 
-		else if (i == -1) 
-			std::cout << "Invalid symbol in expression" << std::endl; 
-		else 
-			std::cout << "Wrong expression" << std::endl; 
-	} 
-	return 0;
+        std::cout << "error" << std::endl;
+        return 1;
+	}
 }

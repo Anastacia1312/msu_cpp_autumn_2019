@@ -79,7 +79,7 @@ int func (const char*& expr, Token &oper)
 { 
 	int result = get_number (expr); 
 	oper = get_token (expr); 
-	if (oper == Token::INV) 
+	if (oper == Token::INV)
 		throw std::invalid_argument("Invalid symbol in expression");
 	while (oper == Token::STAR || oper == Token::SLASH || oper == Token::NUMBER) 
 	{
@@ -126,9 +126,9 @@ int main(int argc, char* argv[])
         std::cout << func_sign (expr) << std::endl;
         return 0;
     }
-	catch (std::invalid_argument&) 
+	catch (std::invalid_argument&exception) 
 	{ 
-        std::cout << "error" << std::endl;
+        std::cout << exception.what() << std::endl;
         return 1;
 	}
 }

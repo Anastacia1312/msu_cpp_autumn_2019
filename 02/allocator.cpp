@@ -19,7 +19,7 @@ LinearAllocator::LinearAllocator(size_t maxSize):maxSize(maxSize),volume(maxSize
 
 char* LinearAllocator::allocator(size_t size)
 {
-    if (size > volume)
+    if ((size > volume) or (base == nullptr))
         throw std::invalid_argument("Problem in allocation");  
     else 
     {   

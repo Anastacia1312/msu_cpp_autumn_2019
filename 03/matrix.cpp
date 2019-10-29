@@ -4,10 +4,17 @@ Matrix::Row::Row(const size_t row_row, int* row):row_row(row_row),row(row)
 {
 }
 
-
-int& Matrix::Row::operator[](size_t j)
+int& Matrix::Row::operator[](const size_t j)
 {
-    if ((j >= row_row) || (j < 0))
+    if (j >= row_row)
+        throw std::out_of_range("Index problem with colomns!");
+    else
+        return row[j];
+}
+
+int& Matrix::Row::operator[](const size_t j) const
+{
+    if (j >= row_row)
         throw std::out_of_range("Index problem with colomns!");
     else
         return row[j];
@@ -33,10 +40,17 @@ size_t Matrix::getColumns() const
     return columns;
 }
 
+Matrix::Row Matrix::operator[](const size_t i)
+{
+    if (i >= rows)
+        throw std::out_of_range("Index problem with rows!");
+    else
+        return Row(columns, matrix[i]);
+}
 
 Matrix::Row Matrix::operator[](const size_t i) const
 {
-    if ((i >= rows) || (i < 0))
+    if (i >= rows)
         throw std::out_of_range("Index problem with rows!");
     else
         return Row(columns, matrix[i]);
@@ -60,7 +74,7 @@ bool Matrix::operator==(const Matrix& m1) const
          return false;
     else
     {
-        for(size_t i = 0; i<rows; ++i)
+        for(size_t i = 0; i < rows; ++i)
             for(size_t j = 0; j < columns; ++j)
                 if (m1[i][j] != matrix[i][j])
                     return false;

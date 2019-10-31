@@ -19,7 +19,7 @@ private:
         public:
             Row(size_t row_row, int* row);
             int& operator[](const size_t j);
-            int& operator[](const size_t j) const;
+            int operator[](const size_t j) const;
     };
     
 public:
@@ -27,7 +27,7 @@ public:
     size_t getColumns() const;
     Matrix(const size_t rows, const size_t columns);
     Row operator[](const size_t i);
-    Row operator[](const size_t i) const;
+    const Row operator[](const size_t i) const;
     Matrix& operator*=(const size_t mul);
     bool operator==(const Matrix& m1) const;
     bool operator!=(const Matrix& m1) const;

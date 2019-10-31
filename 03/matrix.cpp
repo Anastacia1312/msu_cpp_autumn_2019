@@ -12,7 +12,7 @@ int& Matrix::Row::operator[](const size_t j)
         return row[j];
 }
 
-int& Matrix::Row::operator[](const size_t j) const
+int Matrix::Row::operator[](const size_t j) const
 {
     if (j >= row_row)
         throw std::out_of_range("Index problem with colomns!");
@@ -48,7 +48,7 @@ Matrix::Row Matrix::operator[](const size_t i)
         return Row(columns, matrix[i]);
 }
 
-Matrix::Row Matrix::operator[](const size_t i) const
+const Matrix::Row Matrix::operator[](const size_t i) const
 {
     if (i >= rows)
         throw std::out_of_range("Index problem with rows!");
